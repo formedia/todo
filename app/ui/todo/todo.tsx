@@ -2,7 +2,7 @@
 
 // dashboardの右側に表示されるコンテンツを表示するためのレイアウトコンポーネントです
 // reduxでtodoを管理して、このページはtodoの追加、一覧表示、削除を行います
-import { setUser, setTodos, addTodo, removeTodo, updateTodo, selectFilter, TodoData, TodoState, updateFilterStatus, updateFilterUserId } from '@/app/lib/features/todo/todoSlice';
+import { setUser, setTodos, addTodo, removeTodo, updateTodo, selectFilter, TodoData, TodoState, updateFilterStatus, updateFilterUserId } from '@/app/lib/features/todoSlice';
 import React, { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks/redux';
 import { useSession } from 'next-auth/react';

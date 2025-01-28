@@ -4,7 +4,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks/redux';
-import { addTodo } from '@/app/lib/features/todo/todoSlice';
+import { addTodo } from '@/app/lib/features/todoSlice';
 
 interface TodoFormProps {
     handleAdd: (content: string) => void;

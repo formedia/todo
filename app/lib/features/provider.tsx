@@ -1,13 +1,12 @@
 'use client';
+
 import { Provider } from 'react-redux';
 import { store } from '@/app/store';
-import Todo from '@/app/ui/todo/todo';
-
-export default function TodoProvider() {
-  console.log('todo provider');
+import { ReactNode } from 'react';
+export default function StoreProvider({children}: { children: ReactNode }) {
   return (
     <Provider store={store}>
-      <Todo />
+        {children}
     </Provider>
   );
 }

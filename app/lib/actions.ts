@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { TodoData } from '@/app/lib/features/todo/todoSlice';
+import { TodoData } from '@/app/lib/features/todoSlice';
 
 const FormSchema = z.object({
   id: z.string(),

@@ -4,7 +4,8 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { signOut } from '@/auth';
 import ThemeSelector from '@/app/ui/dashboard/theme';
-import TodoStateProvider from '@/app/ui/dashboard/todo_state_provider';
+import UserState from '@/app/ui/dashboard/user-state';
+
 export default function SideNav() {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
@@ -17,7 +18,7 @@ export default function SideNav() {
         </div>
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <TodoStateProvider />
+        <UserState />
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
         <ThemeSelector />

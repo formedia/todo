@@ -1,7 +1,7 @@
 // selecttodoからのデータを受け取り、表示する
 import React from 'react';
 import { useAppSelector } from '@/app/lib/hooks/redux';
-import { filteredTodos } from '@/app/lib/features/todo/todoSlice';
+import { filteredTodos } from '@/app/lib/features/todoSlice';
 
 export default React.memo(function TodoList() {
   const todos = useAppSelector(filteredTodos);

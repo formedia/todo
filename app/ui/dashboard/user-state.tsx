@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppSelector } from '@/app/lib/hooks/redux';
-import { selectOwn } from '@/app/lib/features/todo/todoSlice';
+import { selectOwn } from '@/app/lib/features/todoSlice';
 import { useSession } from 'next-auth/react'; 
 
 export default function TodoState() {

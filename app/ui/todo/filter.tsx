@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '@/app/lib/hooks/redux';
-import { selectFilter, TodoState, updateFilterStatus, updateFilterUserId } from '@/app/lib/features/todo/todoSlice';
+import { selectFilter, TodoState, updateFilterStatus, updateFilterUserId } from '@/app/lib/features/todoSlice';
 
 export default function TodoFilter() {
     console.log('todo filter');
