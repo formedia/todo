@@ -1,3 +1,5 @@
+import { Server } from 'http';
+import { Session } from 'next-auth'
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
@@ -94,4 +96,40 @@ export type Todo = {
   status: 'closed' | 'pending' | 'draft';
   due_date: string;
   created_at: string;
+};
+
+export type TodoData = (Todo & Omit<User,  'id' | 'password' | 'email'>);
+
+export interface TodoState {
+  todos: TodoData[];
+  user: Session["user"] | null;
+  filter: {
+    status: Todo["status"] | null;
+    user_id: User["id"] | null;
+  }
+}
+
+
+// 本来であれば、app/lib/ws_notification_type.tsをimportして定義するべきだが、
+// .jsでは、readonlyや、as constが使用できないので、値がすべてstring;になってしまう。
+// d.tsでも上手くいかないので、やむを得ず、ここに定義する。
+
+export const ServerNotificationType = {
+    ADDED: 'added',
+    UPDATED: 'updated',
+    TODOS: 'todos',
+    DELETED: 'deleted',
+} as const;
+export const ClientNotificationType = {
+    ADD: 'add',
+    GET_TODOS: 'get_todos',
+    UPDATE: 'update',
+} as const;
+
+type valueOf<T>  = T[keyof T];
+
+export type ServerNotification = {
+  type: valueOf<typeof ServerNotificationType>;
+  todos?: TodoData[];
+  todo?: TodoData;
 };

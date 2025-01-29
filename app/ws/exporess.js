@@ -3,6 +3,7 @@ const http = require("http");
 const WebSocket = require("ws");
 const app = express();
 const { PrismaClient } = require('@prisma/client')
+const { ServerNotificationType: SN, ClientNotificationType: CN } = require('../lib/ws_notification_type') 
 
 const prisma = new PrismaClient()
 // Create an HTTP server
@@ -27,16 +28,34 @@ wss.on("connection", (ws) => {
     console.log(j)
 
     switch (j.type) {
-      case "todos":
+      case CN.GET_TODOS:
         getTodo(j.params).then((todos) => {
-          ws.send(JSON.stringify({ type: "todos", todos }));
+          ws.send(JSON.stringify({ type: SN.TODOS, todos }));
         });
         break;  
-      case "add":
+      case CN.ADD:
         addTodo(j.todo).then((todo) => {
           wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
-              client.send(JSON.stringify({ type: "added", todo }));
+              client.send(JSON.stringify({ type: SN.ADDED, todo }));
+            }
+          });
+        });
+        break;
+      case CN.UPDATE:
+        prisma.todos.update({
+          where: { id: j.todo.id },
+          data: {
+            content: j.todo.content,
+            status: j.todo.status,
+            due_date: j.todo.due_date
+          }
+        }).then((todo) => {
+          todo.name = j.todo.name;
+          console.log('updated', todo)
+          wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(JSON.stringify({ type: SN.UPDATED, todo }));
             }
           });
         });

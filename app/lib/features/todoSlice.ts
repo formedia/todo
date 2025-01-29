@@ -2,19 +2,9 @@
 //
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Todo, User } from '@/app/lib/definitions';
-import { Session }  from 'next-auth';
 import { createSelector }  from 'reselect';
-export type TodoData = (Todo & Omit<User,  'id' | 'password' | 'email'>);
+import { TodoData, TodoState } from '@/app/lib/definitions';
 
-export interface TodoState {
-  todos: TodoData[];
-  user: Session["user"] | null;
-  filter: {
-    status: Todo["status"] | null;
-    user_id: User["id"] | null;
-  }
-}
 const initialState: TodoState = {
   todos: [],
   user: null,
@@ -22,6 +12,11 @@ const initialState: TodoState = {
     status: null,
     user_id: null
   }
+};
+
+type UpdateTodoPayload = {
+  todo: TodoData;
+  update?: Partial<TodoData>;
 };
 
 export const todoSlice = createSlice({
@@ -40,13 +35,15 @@ export const todoSlice = createSlice({
     removeTodo: (state, action: PayloadAction<TodoData>) => {
       state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
     },
-    updateTodo: (state, action: PayloadAction<TodoData>) => {
-      const i = state.todos.findIndex(todo => todo.id === action.payload.id);
+    updateTodo: (state, action: PayloadAction<UpdateTodoPayload>) => {
+      const { todo, update } = action.payload;
+      const i = state.todos.findIndex(t => t.id === todo.id);
       if (i !== -1) {
-        state.todos[i] = action.payload;
+        state.todos[i] = update ? {...state.todos[i], ...update}: todo;
+        console.log('reducel, update', state.todos[i]);
       }
     } ,
-    updateFilterStatus: (state, action: PayloadAction<Todo["status"] | null>) => {
+    updateFilterStatus: (state, action: PayloadAction<TodoState["filter"]["status"] | null>) => {
       state.filter.status = action.payload;
     },
     updateFilterUserId: (state, action: PayloadAction<Boolean>) => {
@@ -58,7 +55,8 @@ export const todoSlice = createSlice({
   selectors: {
     selectTodos: (state) => state.todos,
     selectOwn: (state) => state.todos.filter(todo => todo.user_id === state.user?.id).length, 
-    selectFilter: (state) => state.filter
+    selectFilter: (state) => state.filter,
+    selectUser: (state) => state.user
   }
 });
 
@@ -73,5 +71,5 @@ export const filteredTodos = createSelector(
 
 
 export const { setUser, addTodo, removeTodo, updateTodo, setTodos, updateFilterStatus, updateFilterUserId } = todoSlice.actions;
-export const { selectTodos, selectOwn, selectFilter } = todoSlice.selectors;
+export const { selectTodos, selectOwn, selectFilter, selectUser } = todoSlice.selectors;
 export default todoSlice.reducer;
