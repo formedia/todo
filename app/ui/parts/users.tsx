@@ -13,7 +13,7 @@ const users = [
   { name: 'Jack' },
 ];
 
-export const UsersList: React.FC<{onClick: () => void}> = React.memo( ({onClick} ) => {
+export const UsersList: React.FC<{onClick: () => void}> = React.memo( function UserList ({onClick} ) {
   console.log('UsersList rendered');
   return (
     <div>

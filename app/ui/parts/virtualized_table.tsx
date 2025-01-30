@@ -27,7 +27,7 @@ const Row: React.FC<RowProps> = ({ index, style, data }) => {
 interface VirtualizedTableProps {
   data: Array<{ id: number; name: string; email: string }>;
 }
-const VirtualizedTable: React.FC<VirtualizedTableProps> = React.memo(({ data }) => {
+const VirtualizedTable: React.FC<VirtualizedTableProps> = React.memo(function VTable({ data }) {
   const RowRenderer = ({
     index,
     style,

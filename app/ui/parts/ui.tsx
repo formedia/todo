@@ -7,11 +7,11 @@ type ListProps = {
   setItems: (items: string[]) => void;
   children: React.ReactNode;
 };
-export const List: React.FC<ListProps> = React.memo(({
+export const List: React.FC<ListProps> = React.memo(function ItemList({
   items,
   setItems,
   children,
-}) => {
+}) {
   console.log('List rendered');
   const [isOpen, setIsOpen] = useState(false);
   const [edit, setEdit] = useState({
@@ -76,7 +76,7 @@ type Props = {
   onChange: (value: string) => void;
   onAdd: () => void;
 };
-export const Input: React.FC<Props> = React.memo(({ value, onChange, onAdd }) => {
+export const Input: React.FC<Props> = React.memo(function ItemInput({ value, onChange, onAdd }) {
   console.log('Input rendered');
   return (
     <div className="flex space-x-2">

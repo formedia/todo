@@ -6,10 +6,10 @@ import { useSession } from 'next-auth/react';
 
 export default function TodoState() {
   const { data: session } = useSession();
+  const count = useAppSelector(selectOwn);
   if (!session) {
     return (<p>Loading...</p>);
   } 
-  const count = useAppSelector(selectOwn);
   return (
     <div>
       <div>
