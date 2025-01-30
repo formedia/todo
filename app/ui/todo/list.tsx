@@ -4,21 +4,6 @@ import { useAppSelector } from '@/app/lib/hooks/redux';
 import { filteredTodos, selectUser } from '@/app/lib/features/todoSlice';
 import { TodoData } from '@/app/lib/definitions';
 
-// const Task = ({ todo }) => {
-//   return (
-//     <li key={todo.id}>
-//       <p className="text-sm">
-//         <span >
-//           <CheckCircleIcon className="w-6 pt-1" />
-//         </span>
-//
-//       }
-//         {todo.content}</p>
-//     </li>
-//   );
-// }
-//
-
 interface StatusButtonProps {
   todo: TodoData;
   user_id: string;
